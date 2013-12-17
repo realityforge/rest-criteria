@@ -2,7 +2,7 @@ grammar RestCriteriaExpr;
 
 top_level_condition: WS* condition WS* EOF;
 
-condition: atomic_condition | NOT WS* condition | '(' WS* condition WS* ')' | condition WS+ op=( AND | OR ) WS+ condition ;
+condition: atomic_condition | op=NOT WS* condition | '(' WS* condition WS* ')' | condition WS+ op=( AND | OR ) WS+ condition ;
 
 atomic_condition: var_expr WS* op=( EQUALS | NOT_EQUALS ) WS* (var_expr|expr);
 
