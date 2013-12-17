@@ -28,7 +28,7 @@ public class ConstantExpression
 
   public boolean isNumeric()
   {
-    return _value instanceof Integer;
+    return _value instanceof Number;
   }
 
   public boolean isText()
@@ -45,13 +45,13 @@ public class ConstantExpression
     return (Boolean) _value;
   }
 
-  public Long asNumeric()
+  public Number asNumeric()
   {
     if ( !isNumeric() )
     {
       throw new IllegalStateException();
     }
-    return (Long) _value;
+    return (Number) _value;
   }
 
   public String asText()
