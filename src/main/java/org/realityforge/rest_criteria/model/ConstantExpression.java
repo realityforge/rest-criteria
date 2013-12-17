@@ -28,12 +28,12 @@ public class ConstantExpression
 
   public boolean isNumeric()
   {
-    return _value instanceof Boolean;
+    return _value instanceof Integer;
   }
 
   public boolean isText()
   {
-    return _value instanceof Boolean;
+    return _value instanceof String;
   }
 
   public Boolean asBoolean()
