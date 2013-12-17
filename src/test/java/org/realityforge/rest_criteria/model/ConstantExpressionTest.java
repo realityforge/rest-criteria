@@ -10,8 +10,8 @@ public class ConstantExpressionTest
   {
     ensureNumeric( 1L );
     ensureNumeric( 1 );
-    ensureNumeric( (short)1 );
-    ensureNumeric( (byte)1 );
+    ensureNumeric( (short) 1 );
+    ensureNumeric( (byte) 1 );
     ensureNumeric( 1.0F );
     ensureNumeric( 1.0D );
   }
@@ -19,7 +19,7 @@ public class ConstantExpressionTest
   @Test
   public void booleanValue()
   {
-        final ConstantExpression c = new ConstantExpression( Boolean.TRUE );
+    final ConstantExpression c = new ConstantExpression( Boolean.TRUE );
     assertTrue( c.isBoolean() );
     assertFalse( c.isText() );
     assertFalse( c.isNumeric() );
