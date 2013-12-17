@@ -10,7 +10,7 @@ public class ConstantExpression
   public ConstantExpression( @Nonnull final Object value )
   {
     _value = value;
-    if ( !isText() && !isBoolean() && isNumeric() )
+    if ( !isText() && !isBoolean() && !isNumeric() )
     {
       throw new IllegalArgumentException();
     }
