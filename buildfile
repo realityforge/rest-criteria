@@ -23,6 +23,7 @@ define 'rest-criteria' do
 
   package(:jar)
   package(:sources)
+  package(:javadoc)
 end
 
 desc "Generate source artifacts"
