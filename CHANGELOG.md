@@ -1,4 +1,4 @@
-## v0.5.0:
+## v0.6.0:
 
 * Restrict the antlr compile dependencies to runtime dependencies.
 * Generate Maven Central compliant POM.
