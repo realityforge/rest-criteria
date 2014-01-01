@@ -1,13 +1,13 @@
-package org.realityforge.rest_criteria;
+package org.realityforge.rest.criteria;
 
 import org.antlr.v4.runtime.LexerNoViableAltException;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.realityforge.rest_criteria.model.AtomicCondition;
-import org.realityforge.rest_criteria.model.Condition;
-import org.realityforge.rest_criteria.model.ConstantExpression;
-import org.realityforge.rest_criteria.model.UnaryCondition;
-import org.realityforge.rest_criteria.model.VariableExpression;
+import org.realityforge.rest.criteria.model.AtomicCondition;
+import org.realityforge.rest.criteria.model.Condition;
+import org.realityforge.rest.criteria.model.ConstantExpression;
+import org.realityforge.rest.criteria.model.UnaryCondition;
+import org.realityforge.rest.criteria.model.VariableExpression;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;

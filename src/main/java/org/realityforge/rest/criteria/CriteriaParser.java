@@ -1,4 +1,4 @@
-package org.realityforge.rest_criteria;
+package org.realityforge.rest.criteria;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -15,20 +15,20 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.realityforge.rest_criteria.RestCriteriaExprParser.Atomic_conditionContext;
-import org.realityforge.rest_criteria.RestCriteriaExprParser.ConditionContext;
-import org.realityforge.rest_criteria.RestCriteriaExprParser.ExprContext;
-import org.realityforge.rest_criteria.RestCriteriaExprParser.Top_level_conditionContext;
-import org.realityforge.rest_criteria.RestCriteriaExprParser.Var_exprContext;
-import org.realityforge.rest_criteria.model.AtomicCondition;
-import org.realityforge.rest_criteria.model.AtomicCondition.Operator;
-import org.realityforge.rest_criteria.model.BinaryCondition;
-import org.realityforge.rest_criteria.model.Condition;
-import org.realityforge.rest_criteria.model.ConstantExpression;
-import org.realityforge.rest_criteria.model.Element;
-import org.realityforge.rest_criteria.model.Expression;
-import org.realityforge.rest_criteria.model.UnaryCondition;
-import org.realityforge.rest_criteria.model.VariableExpression;
+import org.realityforge.rest.criteria.RestCriteriaExprParser.Atomic_conditionContext;
+import org.realityforge.rest.criteria.RestCriteriaExprParser.ConditionContext;
+import org.realityforge.rest.criteria.RestCriteriaExprParser.ExprContext;
+import org.realityforge.rest.criteria.RestCriteriaExprParser.Top_level_conditionContext;
+import org.realityforge.rest.criteria.RestCriteriaExprParser.Var_exprContext;
+import org.realityforge.rest.criteria.model.AtomicCondition;
+import org.realityforge.rest.criteria.model.AtomicCondition.Operator;
+import org.realityforge.rest.criteria.model.BinaryCondition;
+import org.realityforge.rest.criteria.model.Condition;
+import org.realityforge.rest.criteria.model.ConstantExpression;
+import org.realityforge.rest.criteria.model.Element;
+import org.realityforge.rest.criteria.model.Expression;
+import org.realityforge.rest.criteria.model.UnaryCondition;
+import org.realityforge.rest.criteria.model.VariableExpression;
 
 public final class CriteriaParser
 {

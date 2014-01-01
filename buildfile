@@ -3,7 +3,7 @@ require 'buildr/top_level_generate_dir'
 
 desc "RestCriteria: Simple library for parsing criteria in rest services"
 define 'rest-criteria' do
-  project.group = 'org.realityforge.rest_criteria'
+  project.group = 'org.realityforge.rest.criteria'
   compile.options.source = '1.6'
   compile.options.target = '1.6'
   compile.options.lint = 'all'
@@ -17,7 +17,7 @@ define 'rest-criteria' do
 
   compile.with Buildr::Antlr4.runtime_dependencies, :javax_annotation
 
-  compile.from compile_antlr(_('src/main/antlr/RestCriteriaExpr.g4'), :package => 'org.realityforge.rest_criteria')
+  compile.from compile_antlr(_('src/main/antlr/RestCriteriaExpr.g4'), :package => 'org.realityforge.rest.criteria')
 
   test.using :testng
 

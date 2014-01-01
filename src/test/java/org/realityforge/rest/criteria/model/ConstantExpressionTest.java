@@ -1,4 +1,4 @@
-package org.realityforge.rest_criteria.model;
+package org.realityforge.rest.criteria.model;
 
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
