@@ -5,7 +5,6 @@ import static org.testng.Assert.*;
 
 public class VariableExpressionTest
 {
-
   @Test
   public void getPath()
   {
@@ -30,5 +29,4 @@ public class VariableExpressionTest
   {
     return new VariableExpression( path );
   }
-
 }
