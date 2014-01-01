@@ -18,14 +18,20 @@ module Buildr
     class << self
 
       # The specs for requirements
+      def runtime_dependencies
+        [
+          "org.antlr:antlr4-runtime:jar:4.1"
+        ]
+      end
+
+      # The specs for requirements
       def dependencies
         [
           "org.antlr:antlr4:jar:4.1",
           "org.antlr:ST4:jar:4.0.7",
-          "org.antlr:antlr4-runtime:jar:4.1",
           "org.abego.treelayout:org.abego.treelayout.core:jar:1.0.1",
           "org.antlr:antlr-runtime:jar:3.5"
-        ]
+        ] + runtime_dependencies
       end
 
       def antlr(*args)

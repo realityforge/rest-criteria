@@ -10,7 +10,7 @@ define 'rest-criteria' do
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
 
-  compile.with Buildr::Antlr4.dependencies, :javax_annotation
+  compile.with Buildr::Antlr4.runtime_dependencies, :javax_annotation
 
   compile.from compile_antlr(_('src/main/antlr/RestCriteriaExpr.g4'), :package => 'org.realityforge.rest_criteria')
 
