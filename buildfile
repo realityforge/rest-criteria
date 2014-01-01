@@ -10,6 +10,11 @@ define 'rest-criteria' do
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
 
+  pom.add_apache2_license
+  pom.add_github_project('realityforge/rest-criteria')
+  pom.add_developer('realityforge', 'Peter Donald')
+  pom.provided_dependencies.concat [:javax_annotation]
+
   compile.with Buildr::Antlr4.runtime_dependencies, :javax_annotation
 
   compile.from compile_antlr(_('src/main/antlr/RestCriteriaExpr.g4'), :package => 'org.realityforge.rest_criteria')
