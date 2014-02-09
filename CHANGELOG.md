@@ -1,3 +1,7 @@
+## v0.7.0:
+
+* Support $ in variable expressions.
+
 ## v0.6.0:
 
 * Restrict the antlr compile dependencies to runtime dependencies.

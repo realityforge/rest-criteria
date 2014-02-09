@@ -26,7 +26,7 @@ NOT : 'NOT';
 
 INT     : '-'?[0-9]+ ;
 
-ID  :   ALPHA (ALPHA|DIGIT|[_])* ;      // match identifiers
+ID  :   (DOLLAR|ALPHA) (DOLLAR|ALPHA|DIGIT|[_])* ;      // match identifiers
 
 STRING
     :   '"' ( ESC | ~[\\"] )*? '"'
@@ -36,6 +36,9 @@ STRING
 fragment
 ESC :   '\\' ('"'|'\'')
     ;
+
+fragment
+DOLLAR :   '$';
 
 fragment
 ALPHA :   [a-zA-Z];

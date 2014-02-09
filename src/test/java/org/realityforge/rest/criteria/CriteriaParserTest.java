@@ -38,6 +38,26 @@ public class CriteriaParserTest
         { "rails_case = 33", true },
         { "number1 != -2", true },
 
+        // simple criteria with $ criteria
+        { "$a=true", true },
+        { "$a = true", true },
+        { "$a = false", true },
+        { "$a = 1", true },
+        { "$a = -1", true },
+        { "$a=true AND $b=false", true },
+        { "$a = true AND $b = true", true },
+        { "$a = true OR $b = true", true },
+        { "$a != true OR $b != true", true },
+        { "$a=true AND $b=1 AND $C=3", true },
+        { "$myvar = 'str'", true },
+        { "$myvar = \"str\"", true },
+        { "$myvar != \"str\"", true },
+
+        { "$CamelCase = 1", true },
+        { "$rails_case = 33", true },
+        { "$number1 != -2", true },
+        { "$Camel$Case = 1", true },
+
         // Constants on the left...
         { "1 = 1", false },
         { "44 = 1", false },
