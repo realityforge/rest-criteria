@@ -1,5 +1,6 @@
 require 'buildr/git_auto_version'
 require 'buildr/top_level_generate_dir'
+require 'buildr/gpg'
 
 desc "RestCriteria: Simple library for parsing criteria in rest services"
 define 'rest-criteria' do
