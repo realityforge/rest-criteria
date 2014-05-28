@@ -1,6 +1,7 @@
 require 'buildr/git_auto_version'
 require 'buildr/top_level_generate_dir'
 require 'buildr/gpg'
+require 'buildr/custom_pom'
 
 desc "RestCriteria: Simple library for parsing criteria in rest services"
 define 'rest-criteria' do
@@ -11,7 +12,7 @@ define 'rest-criteria' do
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
 
-  pom.add_apache2_license
+  pom.add_apache_v2_license
   pom.add_github_project('realityforge/rest-criteria')
   pom.add_developer('realityforge', 'Peter Donald')
   pom.provided_dependencies.concat [:javax_annotation]
