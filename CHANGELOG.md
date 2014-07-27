@@ -1,3 +1,9 @@
+## v0.8.0 (Unreleased):
+
+* Require Java7 as a minimum.
+* Upgrade to Antlr 4.3.
+* Implement correct precedence between AND/OR binary operations.
+
 ## v0.7.0:
 
 * Support $ in variable expressions.
