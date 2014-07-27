@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.LexerNoViableAltException;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.realityforge.rest.criteria.model.AtomicCondition;
+import org.realityforge.rest.criteria.model.BinaryCondition;
+import org.realityforge.rest.criteria.model.BinaryCondition.Operator;
 import org.realityforge.rest.criteria.model.Condition;
 import org.realityforge.rest.criteria.model.ConstantExpression;
 import org.realityforge.rest.criteria.model.UnaryCondition;
@@ -154,6 +156,17 @@ public class CriteriaParserTest
     assertTrue( lhs.getRhs() instanceof ConstantExpression );
     final ConstantExpression c = (ConstantExpression) lhs.getRhs();
     assertEquals( c.getValue(), Boolean.TRUE );
+  }
+
+  @Test
+  public void andOrCondition()
+  {
+    final Condition topCondition = parse( "a = 1 AND b = 2 OR c = 3" );
+    assertTrue( topCondition instanceof BinaryCondition );
+    final BinaryCondition top = (BinaryCondition) topCondition;
+    assertEquals( top.getOperator(), Operator.OR );
+    assertTrue( top.getRhs() instanceof AtomicCondition );
+    assertTrue( top.getLhs() instanceof BinaryCondition );
   }
 
   private Condition parse( final String criteria )
