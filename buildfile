@@ -3,7 +3,7 @@ require 'buildr/top_level_generate_dir'
 require 'buildr/gpg'
 require 'buildr/custom_pom'
 
-desc "RestCriteria: Simple library for parsing criteria in rest services"
+desc 'RestCriteria: Simple library for parsing criteria in rest services'
 define 'rest-criteria' do
   project.group = 'org.realityforge.rest.criteria'
   compile.options.source = '1.6'
@@ -28,5 +28,5 @@ define 'rest-criteria' do
   package(:javadoc)
 end
 
-desc "Generate source artifacts"
+desc 'Generate source artifacts'
 task('domgen:all').enhance([file(File.expand_path("#{File.dirname(__FILE__)}/generated/antlr/main/java"))])
