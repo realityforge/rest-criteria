@@ -6,8 +6,8 @@ require 'buildr/custom_pom'
 desc 'RestCriteria: Simple library for parsing criteria in rest services'
 define 'rest-criteria' do
   project.group = 'org.realityforge.rest.criteria'
-  compile.options.source = '1.6'
-  compile.options.target = '1.6'
+  compile.options.source = '1.7'
+  compile.options.target = '1.7'
   compile.options.lint = 'all'
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
