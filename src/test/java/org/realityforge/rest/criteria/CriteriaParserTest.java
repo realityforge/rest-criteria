@@ -129,7 +129,6 @@ public class CriteriaParserTest
     final Condition condition = parse( "a = true" );
     assertTrue( condition instanceof AtomicCondition );
     final AtomicCondition lhs = (AtomicCondition) condition;
-    assertTrue( lhs.getLhs() instanceof VariableExpression );
     final VariableExpression v = lhs.getLhs();
     final String[] path = v.getPath();
     assertEquals( path.length, 1 );
@@ -148,7 +147,6 @@ public class CriteriaParserTest
     final Condition condition = top.getCondition();
     assertTrue( condition instanceof AtomicCondition );
     final AtomicCondition lhs = (AtomicCondition) condition;
-    assertTrue( lhs.getLhs() instanceof VariableExpression );
     final VariableExpression v = lhs.getLhs();
     final String[] path = v.getPath();
     assertEquals( path.length, 1 );
