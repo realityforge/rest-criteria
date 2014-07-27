@@ -222,7 +222,7 @@ public final class CriteriaParser
 
     private boolean isInError( final ParserRuleContext ctx )
     {
-      return null != ctx.exception || null == ctx.stop;
+      return null != ctx.exception;
     }
   }
 }
