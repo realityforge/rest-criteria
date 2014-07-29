@@ -1,3 +1,10 @@
+## v0.9.0:
+
+* Implement the AbstractQueryBuilder.getCriteriaBuilder() method to ease sub-classing.
+* Extract AbstractQueryBuilder.applyRestrictions() to make it easy for sub-classes to
+  further restrict the results. Useful for time parameters or tables that implement
+  logical deletes.
+
 ## v0.8.0:
 
 * Require Java7 as a minimum.

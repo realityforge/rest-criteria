@@ -43,11 +43,32 @@ public abstract class AbstractQueryBuilder<T>
     applyRestrictions( input );
   }
 
-  protected void applyRestrictions( @Nullable final String input )
+  protected final CriteriaBuilder getCriteriaBuilder()
+  {
+    return _cb;
+  }
+
+  protected final void applyRestrictions( @Nullable final String input )
   {
     if ( null != input && !"".equals( input.trim() ) )
     {
-      _criteriaQuery.where( parse( input ) );
+      applyRestriction( parse( input ) );
+    }
+    else
+    {
+      applyRestriction( null );
+    }
+  }
+
+  /**
+   * Sub-classes can override this restriction to further constrain the search.
+   * The predicate parameter is null if an empty or null search criteria was provided.
+   */
+  protected void applyRestriction( @Nullable final Predicate predicate )
+  {
+    if ( null != predicate )
+    {
+      _criteriaQuery.where( predicate );
     }
   }
 
@@ -104,9 +125,9 @@ public abstract class AbstractQueryBuilder<T>
     switch ( condition.getOperator() )
     {
       case EQUALS:
-        return _cb.equal( lhsExpression, rhsExpression );
+        return getCriteriaBuilder().equal( lhsExpression, rhsExpression );
       case NOT_EQUALS:
-        return _cb.notEqual( lhsExpression, rhsExpression );
+        return getCriteriaBuilder().notEqual( lhsExpression, rhsExpression );
       default:
         throw new BadConditionException( "Invalid operator" );
     }
@@ -132,7 +153,7 @@ public abstract class AbstractQueryBuilder<T>
   {
     if ( expression.isBoolean() )
     {
-      final ParameterExpression<Boolean> p = _cb.parameter( Boolean.class );
+      final ParameterExpression<Boolean> p = getCriteriaBuilder().parameter( Boolean.class );
       _parameterSetters.add( new ParameterSetter<T>()
       {
         @Override
@@ -145,7 +166,7 @@ public abstract class AbstractQueryBuilder<T>
     }
     else if ( expression.isNumeric() )
     {
-      final ParameterExpression<Number> p = _cb.parameter( Number.class );
+      final ParameterExpression<Number> p = getCriteriaBuilder().parameter( Number.class );
       _parameterSetters.add( new ParameterSetter<T>()
       {
         @Override
@@ -158,7 +179,7 @@ public abstract class AbstractQueryBuilder<T>
     }
     else if ( expression.isText() )
     {
-      final ParameterExpression<String> p = _cb.parameter( String.class );
+      final ParameterExpression<String> p = getCriteriaBuilder().parameter( String.class );
       _parameterSetters.add( new ParameterSetter<T>()
       {
         @Override
@@ -184,9 +205,9 @@ public abstract class AbstractQueryBuilder<T>
     switch ( condition.getOperator() )
     {
       case AND:
-        return _cb.and( lhsPredicate, rhsPredicate );
+        return getCriteriaBuilder().and( lhsPredicate, rhsPredicate );
       case OR:
-        return _cb.or( lhsPredicate, rhsPredicate );
+        return getCriteriaBuilder().or( lhsPredicate, rhsPredicate );
       default:
         throw new BadConditionException( "Invalid binary operator" );
     }
@@ -197,7 +218,7 @@ public abstract class AbstractQueryBuilder<T>
     switch ( condition.getOperator() )
     {
       case NOT:
-        return _cb.not( processCondition( condition.getCondition() ) );
+        return getCriteriaBuilder().not( processCondition( condition.getCondition() ) );
       default:
         throw new BadConditionException( "Invalid unary operator" );
     }
