@@ -1,4 +1,4 @@
-## v0.9.1 (Pending):
+## v0.9.1:
 
 * Implement the AbstractQueryBuilder.addParameterSetter() method to ease sub-classing.
 
