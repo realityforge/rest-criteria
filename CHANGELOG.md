@@ -3,6 +3,7 @@
 * Require Java7 as a minimum.
 * Upgrade to Antlr 4.3.
 * Implement correct precedence between AND/OR binary operations.
+* Supply a AbstractQueryBuilder for implementers that use a JPA backed data store.
 
 ## v0.7.0:
 
