@@ -22,7 +22,7 @@ public abstract class AbstractQueryBuilder<T>
 {
   private final CriteriaQuery<T> _criteriaQuery;
 
-  private interface ParameterSetter<T>
+  protected interface ParameterSetter<T>
   {
     void apply( TypedQuery<T> typedQuery );
   }
