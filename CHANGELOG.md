@@ -1,3 +1,7 @@
+## v0.9.1 (Pending):
+
+* Implement the AbstractQueryBuilder.addParameterSetter() method to ease sub-classing.
+
 ## v0.9.0:
 
 * Implement the AbstractQueryBuilder.getCriteriaBuilder() method to ease sub-classing.

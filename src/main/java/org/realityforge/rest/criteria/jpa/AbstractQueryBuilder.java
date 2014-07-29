@@ -154,7 +154,7 @@ public abstract class AbstractQueryBuilder<T>
     if ( expression.isBoolean() )
     {
       final ParameterExpression<Boolean> p = getCriteriaBuilder().parameter( Boolean.class );
-      _parameterSetters.add( new ParameterSetter<T>()
+      addParameterSetter( new ParameterSetter<T>()
       {
         @Override
         public void apply( final TypedQuery<T> typedQuery )
@@ -167,7 +167,7 @@ public abstract class AbstractQueryBuilder<T>
     else if ( expression.isNumeric() )
     {
       final ParameterExpression<Number> p = getCriteriaBuilder().parameter( Number.class );
-      _parameterSetters.add( new ParameterSetter<T>()
+      addParameterSetter( new ParameterSetter<T>()
       {
         @Override
         public void apply( final TypedQuery<T> typedQuery )
@@ -180,7 +180,7 @@ public abstract class AbstractQueryBuilder<T>
     else if ( expression.isText() )
     {
       final ParameterExpression<String> p = getCriteriaBuilder().parameter( String.class );
-      _parameterSetters.add( new ParameterSetter<T>()
+      addParameterSetter( new ParameterSetter<T>()
       {
         @Override
         public void apply( final TypedQuery<T> typedQuery )
@@ -194,6 +194,11 @@ public abstract class AbstractQueryBuilder<T>
     {
       throw new BadConditionException( "Invalid constant expression: " + expression.getValue() );
     }
+  }
+
+  protected void addParameterSetter( final ParameterSetter<T> setter )
+  {
+    _parameterSetters.add( setter );
   }
 
   protected abstract Expression<?> processVariableExpression( @Nonnull VariableExpression expression );
