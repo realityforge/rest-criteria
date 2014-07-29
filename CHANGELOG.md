@@ -1,4 +1,4 @@
-## v0.8.0 (Unreleased):
+## v0.8.0:
 
 * Require Java7 as a minimum.
 * Upgrade to Antlr 4.3.
