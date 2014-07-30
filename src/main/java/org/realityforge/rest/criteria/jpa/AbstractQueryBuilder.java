@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.realityforge.rest.criteria.CriteriaParser;
 import org.realityforge.rest.criteria.model.AtomicCondition;
+import org.realityforge.rest.criteria.model.AtomicCondition.Operator;
 import org.realityforge.rest.criteria.model.BinaryCondition;
 import org.realityforge.rest.criteria.model.Condition;
 import org.realityforge.rest.criteria.model.ConstantExpression;
@@ -102,19 +103,19 @@ public abstract class AbstractQueryBuilder<T>
   }
 
   @Nonnull
-  private Predicate processCondition( final Condition condition )
+  protected Predicate processCondition( @Nonnull final Condition condition )
   {
     if ( condition instanceof AtomicCondition )
     {
-      return processAtomicCondition( (AtomicCondition) condition );
+      return processAtomicPredicate( (AtomicCondition) condition );
     }
     else if ( condition instanceof BinaryCondition )
     {
-      return processBinaryCondition( (BinaryCondition) condition );
+      return processBinaryPredicate( (BinaryCondition) condition );
     }
     else if ( condition instanceof UnaryCondition )
     {
-      return processUnaryCondition( (UnaryCondition) condition );
+      return processUnaryPredicate( (UnaryCondition) condition );
     }
     else
     {
@@ -123,24 +124,36 @@ public abstract class AbstractQueryBuilder<T>
   }
 
   @Nonnull
-  private Predicate processAtomicCondition( final AtomicCondition condition )
+  protected Predicate processAtomicPredicate( @Nonnull final AtomicCondition condition )
   {
-    final Expression<?> lhsExpression = processVariableExpression( condition.getLhs() );
-    final Expression<?> rhsExpression = processExpression( condition.getRhs() );
-
-    switch ( condition.getOperator() )
+    final Operator operator = condition.getOperator();
+    switch ( operator )
     {
       case EQUALS:
-        return getCriteriaBuilder().equal( lhsExpression, rhsExpression );
+        return processEqualsCondition( condition );
       case NOT_EQUALS:
-        return getCriteriaBuilder().notEqual( lhsExpression, rhsExpression );
+        return processNotEqualsCondition( condition );
       default:
-        throw new BadConditionException( "Invalid operator" );
+        throw new BadConditionException( "Invalid operator in atomic predicate: " + operator );
     }
   }
 
   @Nonnull
-  private Expression<?> processExpression( final org.realityforge.rest.criteria.model.Expression expression )
+  protected Predicate processNotEqualsCondition( @Nonnull final AtomicCondition condition )
+  {
+    return getCriteriaBuilder().notEqual( processVariableExpression( condition.getLhs() ),
+                                          processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Predicate processEqualsCondition( @Nonnull final AtomicCondition condition )
+  {
+    return getCriteriaBuilder().equal( processVariableExpression( condition.getLhs() ),
+                                       processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Expression<?> processExpression( @Nonnull final org.realityforge.rest.criteria.model.Expression expression )
   {
     if ( expression instanceof ConstantExpression )
     {
@@ -157,7 +170,7 @@ public abstract class AbstractQueryBuilder<T>
   }
 
   @Nonnull
-  private Expression<?> processConstantExpression( final ConstantExpression expression )
+  protected Expression<?> processConstantExpression( @Nonnull final ConstantExpression expression )
   {
     if ( expression.isBoolean() )
     {
@@ -165,7 +178,7 @@ public abstract class AbstractQueryBuilder<T>
       addParameterSetter( new ParameterSetter<T>()
       {
         @Override
-        public void apply( final TypedQuery<T> typedQuery )
+        public void apply( @Nonnull final TypedQuery<T> typedQuery )
         {
           typedQuery.setParameter( p, expression.asBoolean() );
         }
@@ -178,7 +191,7 @@ public abstract class AbstractQueryBuilder<T>
       addParameterSetter( new ParameterSetter<T>()
       {
         @Override
-        public void apply( final TypedQuery<T> typedQuery )
+        public void apply( @Nonnull final TypedQuery<T> typedQuery )
         {
           typedQuery.setParameter( p, expression.asNumeric() );
         }
@@ -191,7 +204,7 @@ public abstract class AbstractQueryBuilder<T>
       addParameterSetter( new ParameterSetter<T>()
       {
         @Override
-        public void apply( final TypedQuery<T> typedQuery )
+        public void apply( @Nonnull final TypedQuery<T> typedQuery )
         {
           typedQuery.setParameter( p, expression.asText() );
         }
@@ -213,30 +226,47 @@ public abstract class AbstractQueryBuilder<T>
   protected abstract Expression<?> processVariableExpression( @Nonnull VariableExpression expression );
 
   @Nonnull
-  private Predicate processBinaryCondition( final BinaryCondition condition )
+  protected Predicate processBinaryPredicate( @Nonnull final BinaryCondition condition )
   {
-    final Predicate lhsPredicate = processCondition( condition.getLhs() );
-    final Predicate rhsPredicate = processCondition( condition.getRhs() );
     switch ( condition.getOperator() )
     {
       case AND:
-        return getCriteriaBuilder().and( lhsPredicate, rhsPredicate );
+        return processAndPredicate( condition );
       case OR:
-        return getCriteriaBuilder().or( lhsPredicate, rhsPredicate );
+        return processOrPredicate( condition );
       default:
-        throw new BadConditionException( "Invalid binary operator" );
+        throw new BadConditionException( "Invalid binary predicate" );
     }
   }
 
   @Nonnull
-  private Predicate processUnaryCondition( final UnaryCondition condition )
+  protected Predicate processOrPredicate( @Nonnull final BinaryCondition condition )
+  {
+    return getCriteriaBuilder().or( processCondition( condition.getLhs() ), processCondition( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Predicate processAndPredicate( @Nonnull final BinaryCondition condition )
+  {
+    return getCriteriaBuilder().and( processCondition( condition.getLhs() ),
+                                     processCondition( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Predicate processUnaryPredicate( @Nonnull final UnaryCondition condition )
   {
     switch ( condition.getOperator() )
     {
       case NOT:
-        return getCriteriaBuilder().not( processCondition( condition.getCondition() ) );
+        return processNotPredicate( condition );
       default:
-        throw new BadConditionException( "Invalid unary operator" );
+        throw new BadConditionException( "Invalid unary predicate" );
     }
+  }
+
+  @Nonnull
+  protected Predicate processNotPredicate( @Nonnull final UnaryCondition condition )
+  {
+    return getCriteriaBuilder().not( processCondition( condition.getCondition() ) );
   }
 }
