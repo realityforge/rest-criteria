@@ -16,6 +16,7 @@ final class TestQueryBuilder
   }
 
   @Override
+  @Nonnull
   protected Expression<?> processVariableExpression( @Nonnull final VariableExpression expression )
   {
     final String[] path = expression.getPath();

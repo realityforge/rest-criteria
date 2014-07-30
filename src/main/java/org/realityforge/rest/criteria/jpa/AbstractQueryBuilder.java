@@ -24,7 +24,7 @@ public abstract class AbstractQueryBuilder<T>
 
   protected interface ParameterSetter<T>
   {
-    void apply( TypedQuery<T> typedQuery );
+    void apply( @Nonnull TypedQuery<T> typedQuery );
   }
 
   private final CriteriaBuilder _cb;
@@ -43,6 +43,7 @@ public abstract class AbstractQueryBuilder<T>
     applyRestrictions( input );
   }
 
+  @Nonnull
   protected final CriteriaBuilder getCriteriaBuilder()
   {
     return _cb;
@@ -72,11 +73,13 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
+  @Nonnull
   protected Root<T> getRoot()
   {
     return _root;
   }
 
+  @Nonnull
   public final CriteriaQuery<T> getCriteriaQuery()
   {
     return _criteriaQuery;
@@ -90,13 +93,15 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
-  protected final Predicate parse( final String criteria )
+  @Nonnull
+  protected final Predicate parse( @Nonnull final String criteria )
   {
     final CriteriaParser parser = new CriteriaParser( criteria );
     final Condition condition = parser.getCondition();
     return processCondition( condition );
   }
 
+  @Nonnull
   private Predicate processCondition( final Condition condition )
   {
     if ( condition instanceof AtomicCondition )
@@ -117,6 +122,7 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
+  @Nonnull
   private Predicate processAtomicCondition( final AtomicCondition condition )
   {
     final Expression<?> lhsExpression = processVariableExpression( condition.getLhs() );
@@ -133,6 +139,7 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
+  @Nonnull
   private Expression<?> processExpression( final org.realityforge.rest.criteria.model.Expression expression )
   {
     if ( expression instanceof ConstantExpression )
@@ -149,6 +156,7 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
+  @Nonnull
   private Expression<?> processConstantExpression( final ConstantExpression expression )
   {
     if ( expression.isBoolean() )
@@ -196,13 +204,15 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
-  protected void addParameterSetter( final ParameterSetter<T> setter )
+  protected void addParameterSetter( @Nonnull final ParameterSetter<T> setter )
   {
     _parameterSetters.add( setter );
   }
 
+  @Nonnull
   protected abstract Expression<?> processVariableExpression( @Nonnull VariableExpression expression );
 
+  @Nonnull
   private Predicate processBinaryCondition( final BinaryCondition condition )
   {
     final Predicate lhsPredicate = processCondition( condition.getLhs() );
@@ -218,6 +228,7 @@ public abstract class AbstractQueryBuilder<T>
     }
   }
 
+  @Nonnull
   private Predicate processUnaryCondition( final UnaryCondition condition )
   {
     switch ( condition.getOperator() )
