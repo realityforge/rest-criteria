@@ -95,11 +95,17 @@ public abstract class AbstractQueryBuilder<T>
   }
 
   @Nonnull
-  protected final Predicate parse( @Nonnull final String criteria )
+  protected Predicate parse( @Nonnull final String criteria )
+  {
+    final Condition condition = parseCondition( criteria );
+    return processCondition( condition );
+  }
+
+  @Nonnull
+  protected Condition parseCondition( @Nonnull final String criteria )
   {
     final CriteriaParser parser = new CriteriaParser( criteria );
-    final Condition condition = parser.getCondition();
-    return processCondition( condition );
+    return parser.getCondition();
   }
 
   @Nonnull
