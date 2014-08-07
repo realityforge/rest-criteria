@@ -1,3 +1,8 @@
+## v0.9.2:
+
+* Add a TreeWalker and associated listener class for walking the semantic tree.
+* Update the AbstractQueryBuilder to be more sub-class friendly.
+
 ## v0.9.1:
 
 * Implement the AbstractQueryBuilder.addParameterSetter() method to ease sub-classing.
