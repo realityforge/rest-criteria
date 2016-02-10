@@ -19,6 +19,7 @@ import org.realityforge.rest.criteria.model.ConstantExpression;
 import org.realityforge.rest.criteria.model.UnaryCondition;
 import org.realityforge.rest.criteria.model.VariableExpression;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractQueryBuilder<T>
 {
   private final CriteriaQuery<T> _criteriaQuery;
@@ -169,7 +170,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processGreaterThanCondition( @Nonnull final AtomicCondition condition )
   {
-    //noinspection unchecked
     return getCriteriaBuilder().greaterThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
                                              (Expression<? extends Y>) processExpression( condition.getRhs() ) );
   }
@@ -177,7 +177,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processLessThanCondition( @Nonnull final AtomicCondition condition )
   {
-    //noinspection unchecked
     return getCriteriaBuilder().lessThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
                                           (Expression<? extends Y>) processExpression( condition.getRhs() ) );
   }
@@ -185,7 +184,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processGreaterThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    //noinspection unchecked
     return getCriteriaBuilder().greaterThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
                                                       (Expression<? extends Y>) processExpression( condition.getRhs() ) );
   }
@@ -193,7 +191,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processLessThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    //noinspection unchecked
     return getCriteriaBuilder().lessThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
                                                    (Expression<? extends Y>) processExpression( condition.getRhs() ) );
   }
