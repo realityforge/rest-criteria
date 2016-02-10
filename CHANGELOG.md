@@ -1,3 +1,7 @@
+## v0.9.3:
+
+* Add support for  \>, \<, \>=, and \<= operators. Submitted by Ian Caughley.
+
 ## v0.9.2:
 
 * Add a TreeWalker and associated listener class for walking the semantic tree.
