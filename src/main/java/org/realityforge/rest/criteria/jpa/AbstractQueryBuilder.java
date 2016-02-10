@@ -139,6 +139,14 @@ public abstract class AbstractQueryBuilder<T>
         return processEqualsCondition( condition );
       case NOT_EQUALS:
         return processNotEqualsCondition( condition );
+      case GREATER_THAN:
+        return processGreaterThanCondition( condition );
+      case LESS_THAN:
+        return processLessThanCondition( condition );
+      case GREATER_THAN_OR_EQUALS:
+        return processGreaterThanOrEqualsCondition( condition );
+      case LESS_THAN_OR_EQUALS:
+        return processLessThanOrEqualsCondition( condition );
       default:
         throw new BadConditionException( "Invalid operator in atomic predicate: " + operator );
     }
@@ -156,6 +164,38 @@ public abstract class AbstractQueryBuilder<T>
   {
     return getCriteriaBuilder().equal( processVariableExpression( condition.getLhs() ),
                                        processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected <Y extends Comparable<? super Y>> Predicate processGreaterThanCondition( @Nonnull final AtomicCondition condition )
+  {
+    //noinspection unchecked
+    return getCriteriaBuilder().greaterThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
+                                             (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected <Y extends Comparable<? super Y>> Predicate processLessThanCondition( @Nonnull final AtomicCondition condition )
+  {
+    //noinspection unchecked
+    return getCriteriaBuilder().lessThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
+                                          (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected <Y extends Comparable<? super Y>> Predicate processGreaterThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
+  {
+    //noinspection unchecked
+    return getCriteriaBuilder().greaterThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
+                                                      (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected <Y extends Comparable<? super Y>> Predicate processLessThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
+  {
+    //noinspection unchecked
+    return getCriteriaBuilder().lessThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
+                                                   (Expression<? extends Y>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull

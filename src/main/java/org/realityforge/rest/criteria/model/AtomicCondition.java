@@ -5,9 +5,9 @@ import javax.annotation.Nonnull;
 public class AtomicCondition
   extends Condition
 {
-  public static enum Operator
+  public enum Operator
   {
-    EQUALS, NOT_EQUALS
+    EQUALS, NOT_EQUALS, GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS
   }
 
   private final Operator _operator;

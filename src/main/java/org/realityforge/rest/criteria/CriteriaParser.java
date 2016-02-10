@@ -3,7 +3,9 @@ package org.realityforge.rest.criteria;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -32,21 +34,24 @@ import org.realityforge.rest.criteria.model.VariableExpression;
 
 public final class CriteriaParser
 {
-  private Condition _condition;
+  /**
+   * Defines the Mapping between RestCriteriaExprParser operators and AtomicCondition.Operator
+   */
+  private static Map<Integer, Operator> PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP = new HashMap<>();
 
-  private static class BailLexer
-    extends RestCriteriaExprLexer
+  static
   {
-    public BailLexer( final CharStream input )
-    {
-      super( input );
-    }
-
-    public void recover( final LexerNoViableAltException e )
-    {
-      throw new ParseCancellationException( e );
-    }
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.EQUALS, Operator.EQUALS );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.NOT_EQUALS, Operator.NOT_EQUALS );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.GREATER_THAN, Operator.GREATER_THAN );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.LESS_THAN, Operator.LESS_THAN );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.GREATER_THAN_OR_EQUALS,
+                                                 Operator.GREATER_THAN_OR_EQUALS );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.LESS_THAN_OR_EQUALS,
+                                                 Operator.LESS_THAN_OR_EQUALS );
   }
+
+  private Condition _condition;
 
   public CriteriaParser( @Nonnull final String criteria )
   {
@@ -75,6 +80,20 @@ public final class CriteriaParser
   public Condition getCondition()
   {
     return _condition;
+  }
+
+  private static class BailLexer
+    extends RestCriteriaExprLexer
+  {
+    public BailLexer( final CharStream input )
+    {
+      super( input );
+    }
+
+    public void recover( final LexerNoViableAltException e )
+    {
+      throw new ParseCancellationException( e );
+    }
   }
 
   private static class ParseListener
@@ -148,16 +167,13 @@ public final class CriteriaParser
       {
         return;
       }
-      //var_expr WS* op=( EQUALS | NOT_EQUALS ) WS* (var_expr|expr)
+      //var_expr WS* op=( EQUALS | NOT_EQUALS | GREATER_THAN | LESS_THAN | GREATER_THAN_OR_EQUALS | LESS_THAN_OR_EQUALS ) WS* (var_expr|expr)
       final Expression rhs = (Expression) _stack.pop();
       final VariableExpression lhs = (VariableExpression) _stack.pop();
-      if ( ctx.op.getType() == RestCriteriaExprParser.EQUALS )
+      final Operator operator = PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.get( ctx.op.getType() );
+      if ( operator != null )
       {
-        _stack.push( new AtomicCondition( Operator.EQUALS, lhs, rhs ) );
-      }
-      else if ( ctx.op.getType() == RestCriteriaExprParser.NOT_EQUALS )
-      {
-        _stack.push( new AtomicCondition( Operator.NOT_EQUALS, lhs, rhs ) );
+        _stack.push( new AtomicCondition( operator, lhs, rhs ) );
       }
       else
       {
