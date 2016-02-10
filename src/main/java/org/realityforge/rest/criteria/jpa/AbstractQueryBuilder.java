@@ -170,29 +170,29 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processGreaterThanCondition( @Nonnull final AtomicCondition condition )
   {
-    return getCriteriaBuilder().greaterThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
-                                             (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+    return getCriteriaBuilder().greaterThan( (Expression<Y>) processVariableExpression( condition.getLhs() ),
+                                             (Expression<Y>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processLessThanCondition( @Nonnull final AtomicCondition condition )
   {
-    return getCriteriaBuilder().lessThan( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
-                                          (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+    return getCriteriaBuilder().lessThan( (Expression<Y>) processVariableExpression( condition.getLhs() ),
+                                          (Expression<Y>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processGreaterThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    return getCriteriaBuilder().greaterThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
-                                                      (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+    return getCriteriaBuilder().greaterThanOrEqualTo( (Expression<Y>) processVariableExpression( condition.getLhs() ),
+                                                      (Expression<Y>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull
   protected <Y extends Comparable<? super Y>> Predicate processLessThanOrEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    return getCriteriaBuilder().lessThanOrEqualTo( (Expression<? extends Y>) processVariableExpression( condition.getLhs() ),
-                                                   (Expression<? extends Y>) processExpression( condition.getRhs() ) );
+    return getCriteriaBuilder().lessThanOrEqualTo( (Expression<Y>) processVariableExpression( condition.getLhs() ),
+                                                   (Expression<Y>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull
