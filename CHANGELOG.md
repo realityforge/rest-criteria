@@ -1,3 +1,7 @@
+## v0.9.4:
+
+* Added support for LIKE operator. Submitted by Ian Caughley.
+
 ## v0.9.3:
 
 * Add support for  \>, \<, \>=, and \<= operators. Submitted by Ian Caughley.

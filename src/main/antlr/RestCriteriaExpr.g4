@@ -9,7 +9,7 @@ condition:
   condition WS+ op=OR WS+ condition  |
   atomic_condition;
 
-atomic_condition: var_expr WS* op=( EQUALS | NOT_EQUALS | GREATER_THAN | LESS_THAN | GREATER_THAN_OR_EQUALS | LESS_THAN_OR_EQUALS ) WS* (var_expr|expr);
+atomic_condition: var_expr WS* op=( EQUALS | NOT_EQUALS | GREATER_THAN | LESS_THAN | GREATER_THAN_OR_EQUALS | LESS_THAN_OR_EQUALS | LIKE ) WS* (var_expr|expr);
 
 var_expr: ID (DOT ID)*;
 
@@ -28,6 +28,8 @@ LESS_THAN : '<';
 GREATER_THAN_OR_EQUALS : '>=';
 
 LESS_THAN_OR_EQUALS : '<=';
+
+LIKE : 'LIKE';
 
 DOT : '.';
 

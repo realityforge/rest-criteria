@@ -148,6 +148,8 @@ public abstract class AbstractQueryBuilder<T>
         return processGreaterThanOrEqualsCondition( condition );
       case LESS_THAN_OR_EQUALS:
         return processLessThanOrEqualsCondition( condition );
+      case LIKE:
+        return processLikeCondition( condition );
       default:
         throw new BadConditionException( "Invalid operator in atomic predicate: " + operator );
     }
@@ -193,6 +195,14 @@ public abstract class AbstractQueryBuilder<T>
   {
     return getCriteriaBuilder().lessThanOrEqualTo( (Expression<Y>) processVariableExpression( condition.getLhs() ),
                                                    (Expression<Y>) processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Predicate processLikeCondition( @Nonnull final AtomicCondition condition )
+  {
+    //noinspection unchecked
+    return getCriteriaBuilder().like( (Expression<String>) processVariableExpression( condition.getLhs() ),
+                                      (Expression<String>) processExpression( condition.getRhs() ) );
   }
 
   @Nonnull

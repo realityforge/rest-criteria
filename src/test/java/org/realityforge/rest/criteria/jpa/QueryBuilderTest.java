@@ -31,6 +31,7 @@ public class QueryBuilderTest
         { " ", new String[]{ "A", "B", "C", "D", "E" } },
         { "rank = rank", new String[]{ "A", "B", "C", "D", "E" } },
         { "rank = 3", new String[]{ "C" } },
+        { "rank=3", new String[]{ "C" } },
         { "rank > 3", new String[]{ "D", "E" } },
         { "rank >= 3", new String[]{ "C", "D", "E" } },
         { "rank < 3", new String[]{ "A", "B" } },
@@ -41,6 +42,9 @@ public class QueryBuilderTest
         { "rank != 3 AND code = 'A'", new String[]{ "A" } },
         { "rank = 3 OR code = 'B'", new String[]{ "B", "C" } },
         { "allDay = false AND code != 'C'", new String[]{ "E" } },
+        { "code LIKE 'A'", new String[]{ "A" } },
+        { "code LIKE '%'", new String[]{ "A", "B", "C", "D", "E" } },
+        { "(code = 'A' OR code = 'D') AND rank > 3", new String[]{ "D" } },
       };
   }
 
