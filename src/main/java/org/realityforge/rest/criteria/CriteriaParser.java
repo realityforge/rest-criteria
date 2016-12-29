@@ -43,6 +43,7 @@ public final class CriteriaParser
   {
     PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.EQUALS, Operator.EQUALS );
     PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.NOT_EQUALS, Operator.NOT_EQUALS );
+    PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.LIKE, Operator.LIKE );
     PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.GREATER_THAN, Operator.GREATER_THAN );
     PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.LESS_THAN, Operator.LESS_THAN );
     PARSER_TO_ATOMIC_CONDITION_OPERATOR_MAP.put( RestCriteriaExprParser.GREATER_THAN_OR_EQUALS,
