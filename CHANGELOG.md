@@ -1,3 +1,7 @@
+## v0.9.5:
+
+* Added support for =NULL and !=NULL. Submitted by Ian Caughley.
+
 ## v0.9.4:
 
 * Added support for LIKE operator. Submitted by Ian Caughley.
