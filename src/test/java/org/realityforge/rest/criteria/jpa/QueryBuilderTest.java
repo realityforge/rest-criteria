@@ -47,7 +47,7 @@ public class QueryBuilderTest
         { "(code = 'A' OR code = 'D') AND rank > 3", new String[]{ "D" } },
         { "name = NULL", new String[]{ "E" } },
         { "name != NULL", new String[]{ "A", "B", "C", "D" } },
-        };
+      };
   }
 
   @Test(dataProvider = "Query")
