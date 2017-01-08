@@ -45,6 +45,8 @@ public class QueryBuilderTest
         { "code LIKE 'A'", new String[]{ "A" } },
         { "code LIKE '%'", new String[]{ "A", "B", "C", "D", "E" } },
         { "(code = 'A' OR code = 'D') AND rank > 3", new String[]{ "D" } },
+        { "name = NULL", new String[]{ "E" } },
+        { "name != NULL", new String[]{ "A", "B", "C", "D" } },
       };
   }
 
@@ -110,7 +112,7 @@ public class QueryBuilderTest
     createEntity( "B", "Bob", 2, true );
     createEntity( "C", "Cat", 3, false );
     createEntity( "D", "Dog", 4, true );
-    createEntity( "E", "Ear", 5, false );
+    createEntity( "E", null, 5, false );
   }
 
   @AfterMethod
