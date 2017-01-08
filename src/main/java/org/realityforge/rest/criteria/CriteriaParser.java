@@ -29,6 +29,7 @@ import org.realityforge.rest.criteria.model.Condition;
 import org.realityforge.rest.criteria.model.ConstantExpression;
 import org.realityforge.rest.criteria.model.Element;
 import org.realityforge.rest.criteria.model.Expression;
+import org.realityforge.rest.criteria.model.NullExpression;
 import org.realityforge.rest.criteria.model.UnaryCondition;
 import org.realityforge.rest.criteria.model.VariableExpression;
 
@@ -212,6 +213,11 @@ public final class CriteriaParser
         //STRING
         final String text = ctx.STRING().getText();
         _stack.push( new ConstantExpression( text.substring( 1, text.length() - 1 ) ) );
+      }
+      else if ( null != ctx.NULL() )
+      {
+        //NULL
+        _stack.push( new NullExpression() );
       }
       else
       {

@@ -16,6 +16,7 @@ import org.realityforge.rest.criteria.model.AtomicCondition.Operator;
 import org.realityforge.rest.criteria.model.BinaryCondition;
 import org.realityforge.rest.criteria.model.Condition;
 import org.realityforge.rest.criteria.model.ConstantExpression;
+import org.realityforge.rest.criteria.model.NullExpression;
 import org.realityforge.rest.criteria.model.UnaryCondition;
 import org.realityforge.rest.criteria.model.VariableExpression;
 
@@ -158,6 +159,10 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected Predicate processNotEqualsCondition( @Nonnull final AtomicCondition condition )
   {
+    if ( condition.getRhs() instanceof NullExpression )
+    {
+      return getCriteriaBuilder().isNotNull( processVariableExpression( condition.getLhs() ) );
+    }
     return getCriteriaBuilder().notEqual( processVariableExpression( condition.getLhs() ),
                                           processExpression( condition.getRhs() ) );
   }
@@ -165,6 +170,10 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected Predicate processEqualsCondition( @Nonnull final AtomicCondition condition )
   {
+    if ( condition.getRhs() instanceof NullExpression )
+    {
+      return getCriteriaBuilder().isNull( processVariableExpression( condition.getLhs() ) );
+    }
     return getCriteriaBuilder().equal( processVariableExpression( condition.getLhs() ),
                                        processExpression( condition.getRhs() ) );
   }

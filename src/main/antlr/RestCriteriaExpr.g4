@@ -13,7 +13,7 @@ atomic_condition: var_expr WS* op=( EQUALS | NOT_EQUALS | GREATER_THAN | LESS_TH
 
 var_expr: ID (DOT ID)*;
 
-expr: INT | BOOLEAN | STRING;
+expr: INT | BOOLEAN | STRING | NULL;
 
 BOOLEAN : 'true' | 'false' ;
 
@@ -30,6 +30,8 @@ GREATER_THAN_OR_EQUALS : '>=';
 LESS_THAN_OR_EQUALS : '<=';
 
 LIKE : 'LIKE';
+
+NULL : 'NULL';
 
 DOT : '.';
 
