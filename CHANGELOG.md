@@ -1,6 +1,7 @@
 ## v0.9.5:
 
-* Added support for =NULL and !=NULL. Submitted by Ian Caughley.
+* Added support for IS NULL. There no support for <foo> IS NOT NULL, instead
+  NOT <foo> IS NULL can be used. Submitted by Ian Caughley.
 
 ## v0.9.4:
 

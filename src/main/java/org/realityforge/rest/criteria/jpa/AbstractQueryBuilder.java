@@ -20,19 +20,12 @@ import org.realityforge.rest.criteria.model.NullExpression;
 import org.realityforge.rest.criteria.model.UnaryCondition;
 import org.realityforge.rest.criteria.model.VariableExpression;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public abstract class AbstractQueryBuilder<T>
 {
   private final CriteriaQuery<T> _criteriaQuery;
-
-  protected interface ParameterSetter<T>
-  {
-    void apply( @Nonnull TypedQuery<T> typedQuery );
-  }
-
   private final CriteriaBuilder _cb;
   private final Root<T> _root;
-
   private final LinkedList<ParameterSetter<T>> _parameterSetters = new LinkedList<>();
 
   protected AbstractQueryBuilder( @Nonnull final Class<T> type,
@@ -151,6 +144,8 @@ public abstract class AbstractQueryBuilder<T>
         return processLessThanOrEqualsCondition( condition );
       case LIKE:
         return processLikeCondition( condition );
+      case IS:
+        return processIsCondition( condition );
       default:
         throw new BadConditionException( "Invalid operator in atomic predicate: " + operator );
     }
@@ -159,10 +154,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected Predicate processNotEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    if ( condition.getRhs() instanceof NullExpression )
-    {
-      return getCriteriaBuilder().isNotNull( processVariableExpression( condition.getLhs() ) );
-    }
     return getCriteriaBuilder().notEqual( processVariableExpression( condition.getLhs() ),
                                           processExpression( condition.getRhs() ) );
   }
@@ -170,10 +161,6 @@ public abstract class AbstractQueryBuilder<T>
   @Nonnull
   protected Predicate processEqualsCondition( @Nonnull final AtomicCondition condition )
   {
-    if ( condition.getRhs() instanceof NullExpression )
-    {
-      return getCriteriaBuilder().isNull( processVariableExpression( condition.getLhs() ) );
-    }
     return getCriteriaBuilder().equal( processVariableExpression( condition.getLhs() ),
                                        processExpression( condition.getRhs() ) );
   }
@@ -212,6 +199,19 @@ public abstract class AbstractQueryBuilder<T>
     //noinspection unchecked
     return getCriteriaBuilder().like( (Expression<String>) processVariableExpression( condition.getLhs() ),
                                       (Expression<String>) processExpression( condition.getRhs() ) );
+  }
+
+  @Nonnull
+  protected Predicate processIsCondition( @Nonnull final AtomicCondition condition )
+  {
+    if ( condition.getRhs() instanceof NullExpression )
+    {
+      return getCriteriaBuilder().isNull( processVariableExpression( condition.getLhs() ) );
+    }
+    else
+    {
+      throw new BadConditionException( "IS must be followed by NULL. For 'foo IS NOT NULL', use 'NOT foo IS NULL'." );
+    }
   }
 
   @Nonnull
@@ -330,5 +330,10 @@ public abstract class AbstractQueryBuilder<T>
   protected Predicate processNotPredicate( @Nonnull final UnaryCondition condition )
   {
     return getCriteriaBuilder().not( processCondition( condition.getCondition() ) );
+  }
+
+  protected interface ParameterSetter<T>
+  {
+    void apply( @Nonnull TypedQuery<T> typedQuery );
   }
 }

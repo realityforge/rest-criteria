@@ -11,18 +11,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-@SuppressWarnings("UnusedDeclaration")
+@SuppressWarnings( "UnusedDeclaration" )
 public class QueryBuilderTest
 {
   private EntityManager _em;
 
-  @DataProvider(name = "Query")
+  @DataProvider( name = "Query" )
   public Object[][] queryProvider()
   {
     return new Object[][]
@@ -45,15 +46,34 @@ public class QueryBuilderTest
         { "code LIKE 'A'", new String[]{ "A" } },
         { "code LIKE '%'", new String[]{ "A", "B", "C", "D", "E" } },
         { "(code = 'A' OR code = 'D') AND rank > 3", new String[]{ "D" } },
-        { "name = NULL", new String[]{ "E" } },
-        { "name != NULL", new String[]{ "A", "B", "C", "D" } },
-      };
+        { "name IS NULL", new String[]{ "E" } },
+        { "NOT name IS NULL", new String[]{ "A", "B", "C", "D" } },
+        };
   }
 
-  @Test(dataProvider = "Query")
+  @DataProvider( name = "BadConditions" )
+  public Object[][] badConditionsProvider()
+  {
+    return new Object[][]
+      {
+        { "name = NULL" },
+        { "name LIKE NULL" },
+        { "name IS NOT NULL" },
+        { "name IS 'FOO'" },
+        };
+  }
+
+  @Test( dataProvider = "Query" )
   public void query( final String query, final String[] results )
   {
     assertQueryResults( query, results );
+  }
+
+  @Test( dataProvider = "BadConditions", expectedExceptions = { BadConditionException.class,
+                                                                ParseCancellationException.class } )
+  public void badConditions( final String query )
+  {
+    assertQueryResults( query );
   }
 
   private void assertQueryResults( final String input, final String... expected )
