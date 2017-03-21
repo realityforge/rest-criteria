@@ -9,8 +9,8 @@ TEST_DEPS = [:eclipselink, :h2db]
 desc 'RestCriteria: Simple library for parsing criteria in rest services'
 define 'rest-criteria' do
   project.group = 'org.realityforge.rest.criteria'
-  compile.options.source = '1.7'
-  compile.options.target = '1.7'
+  compile.options.source = '1.8'
+  compile.options.target = '1.8'
   compile.options.lint = 'all'
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
