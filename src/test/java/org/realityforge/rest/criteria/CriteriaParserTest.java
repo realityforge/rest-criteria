@@ -96,7 +96,7 @@ public class CriteriaParserTest
 
         // Bad path variable
         { "a.b. = true", false },
-      };
+        };
   }
 
   @SuppressWarnings( "PMD.EmptyCatchBlock" )

@@ -4,7 +4,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @SuppressWarnings( { "UnusedDeclaration", "JavaDoc" } )
-@StaticMetamodel(MyEntity.class)
+@StaticMetamodel( MyEntity.class )
 public class MyEntity_
 {
   public static volatile SingularAttribute<MyEntity, Integer> id;

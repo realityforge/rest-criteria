@@ -23,6 +23,11 @@ import org.realityforge.rest.criteria.model.VariableExpression;
 @SuppressWarnings( "unchecked" )
 public abstract class AbstractQueryBuilder<T>
 {
+  protected interface ParameterSetter<T>
+  {
+    void apply( @Nonnull TypedQuery<T> typedQuery );
+  }
+
   private final CriteriaQuery<T> _criteriaQuery;
   private final CriteriaBuilder _cb;
   private final Root<T> _root;
@@ -330,10 +335,5 @@ public abstract class AbstractQueryBuilder<T>
   protected Predicate processNotPredicate( @Nonnull final UnaryCondition condition )
   {
     return getCriteriaBuilder().not( processCondition( condition.getCondition() ) );
-  }
-
-  protected interface ParameterSetter<T>
-  {
-    void apply( @Nonnull TypedQuery<T> typedQuery );
   }
 }
