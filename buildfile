@@ -1,7 +1,6 @@
 require 'buildr/git_auto_version'
 require 'buildr/top_level_generate_dir'
 require 'buildr/gpg'
-require 'buildr/custom_pom'
 
 PROVIDED_DEPS = [:javax_javaee, :javax_annotation]
 TEST_DEPS = [:eclipselink, :h2db]
