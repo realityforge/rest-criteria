@@ -14,7 +14,6 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.LexerNoViableAltException;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.realityforge.rest.criteria.RestCriteriaExprParser.Atomic_conditionContext;
@@ -111,7 +110,7 @@ public final class CriteriaParser
     }
 
     @Override
-    public void exitTop_level_condition( @NotNull final Top_level_conditionContext ctx )
+    public void exitTop_level_condition( final Top_level_conditionContext ctx )
     {
       if ( isInError( ctx ) )
       {
@@ -129,7 +128,7 @@ public final class CriteriaParser
 
     @SuppressWarnings( "unchecked" )
     @Override
-    public void exitCondition( @NotNull final ConditionContext ctx )
+    public void exitCondition( final ConditionContext ctx )
     {
       if ( isInError( ctx ) )
       {
@@ -164,7 +163,7 @@ public final class CriteriaParser
     }
 
     @Override
-    public void exitAtomic_condition( @NotNull final Atomic_conditionContext ctx )
+    public void exitAtomic_condition( final Atomic_conditionContext ctx )
     {
       if ( isInError( ctx ) )
       {
@@ -185,7 +184,7 @@ public final class CriteriaParser
     }
 
     @Override
-    public void exitExpr( @NotNull final ExprContext ctx )
+    public void exitExpr( final ExprContext ctx )
     {
       if ( isInError( ctx ) )
       {
@@ -227,7 +226,7 @@ public final class CriteriaParser
     }
 
     @Override
-    public void exitVar_expr( @NotNull final Var_exprContext ctx )
+    public void exitVar_expr( final Var_exprContext ctx )
     {
       if ( isInError( ctx ) )
       {
