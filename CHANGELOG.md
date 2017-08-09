@@ -1,3 +1,7 @@
+## v0.9.6:
+
+* Update the version of antlr required to 4.5.1.
+
 ## v0.9.5:
 
 * Added support for IS NULL. There no support for <foo> IS NOT NULL, instead

@@ -19,13 +19,13 @@ module Buildr
 
       # The specs for requirements
       def runtime_dependencies
-        %w(org.antlr:antlr4-runtime:jar:4.3 org.antlr:antlr4-annotations:jar:4.3)
+        %w(org.antlr:antlr4-runtime:jar:4.5.1)
       end
 
       # The specs for requirements
       def dependencies
         %w(
-        org.antlr:antlr4:jar:4.3
+        org.antlr:antlr4:jar:4.5.1
         org.antlr:ST4:jar:4.0.8
         org.antlr:antlr-runtime:jar:3.5.2
         org.abego.treelayout:org.abego.treelayout.core:jar:1.0.1
